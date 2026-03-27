@@ -2,8 +2,12 @@
 ##### Vault Authentication Backends #####
 #########################################
 
+
+### Kubernetes Auth Backend ###
 resource "vault_auth_backend" "kubernetes" {
-    type = "kubernetes"
+    type        = "kubernetes"
+    path        = "kubernetes"
+    description = "Kubernetes auth backend for pod identity authentication."
 }
 
 resource "vault_kubernetes_auth_backend_config" "kubernetes" {
@@ -21,4 +25,19 @@ resource "vault_kubernetes_auth_backend_role" "cert_manager" {
     token_policies                   = [ "cert-manager" ]
     token_ttl                        = 3600
     audience                         = "vault"
+}
+
+
+### GitHub JWT Auth Backend ###
+
+resource "vault_auth_backend" "github" {
+    type        = "jwt"
+    path        = "jwt"
+    description = "JWT auth backend for GitHub Actions workflows."
+}
+
+resource "vault_jwt_auth_backend_config" "github" {
+    backend           = vault_auth_backend.github.path
+    oidc_discover_url = "https://token.actions.githubusercontent.com"
+    bound_issuer      = "https://token.actions.githubusercontent.com"
 }
