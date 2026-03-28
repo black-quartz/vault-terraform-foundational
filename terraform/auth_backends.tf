@@ -34,19 +34,26 @@ resource "vault_kubernetes_auth_backend_role" "cert_manager" {
 
 ### GitHub JWT Auth Backend ###
 
-# Backend
-resource "vault_auth_backend" "github" {
-    type        = "jwt"
-    path        = "jwt"
-    description = "JWT auth backend for GitHub Actions workflows."
+resource "vault_jwt_auth_backend" "github" {
+    path               = "jwt"
+    type               = "jwt"
+    oidc_discovery_url = "https://token.actions.githubusercontent.com"
+    bound_issuer       = "https://token.actions.githubusercontent.com"
 }
 
-# Backend Config
-resource "vault_jwt_auth_backend_config" "github" {
-    backend           = vault_auth_backend.github.path
-    oidc_discover_url = "https://token.actions.githubusercontent.com"
-    bound_issuer      = "https://token.actions.githubusercontent.com"
+resource "vault_jwt_auth_backend_role" "vault_deploy" {
+    backend        = vault_jwt_auth_backend.github.path
+    role_name      = "vault-deploy"
+    token_policies = ["vault-deploy"]
+
+    role_type  = "jwt"
+    user_claim = "actor"
+
+    bound_audiences = ["https://github.com/black-quartz"]
+    bound_claims = {
+      repository = "black-quartz/vault-deployment"
+    }
+
+    token_ttl     = 900 # 15m
+    token_max_ttl = 900 # 15m
 }
-
-# Backend Roles
-
