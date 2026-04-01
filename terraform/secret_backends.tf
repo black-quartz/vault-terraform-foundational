@@ -21,6 +21,17 @@ resource "vault_kubernetes_secret_backend_role" "vault_deploy" {
     token_max_ttl     = 3600 # 1hr
 }
 
+resource "vault_kubernetes_secret_backend_role" "twingate_deploy" {
+    backend                       = vault_kubernetes_secret_backend.kubernetes.path
+    name                          = "twingate-deploy"
+    kubernetes_role_name          = "contributor"
+    kubernetes_role_type          = "ClusterRole"
+    allowed_kubernetes_namespaces = ["twingate"]
+
+    token_default_ttl = 1800
+    token_max_ttl     = 3600
+}
+
 
 ### PKI Secrets Backend ###
 
