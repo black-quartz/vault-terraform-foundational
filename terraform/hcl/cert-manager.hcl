@@ -2,6 +2,10 @@ path "pki/sign/gateway" {
     capabilities = ["update"]
 }
 
+path "pki/sign/internal" {
+  capabilities = ["update"]
+}
+
 path "pki/ca_chain" {
   capabilities = ["read"]
 }
