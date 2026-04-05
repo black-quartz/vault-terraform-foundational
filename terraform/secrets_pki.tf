@@ -29,7 +29,7 @@ resource "vault_pki_secret_backend_role" "gateway" {
     enforce_hostnames           = true
 
     # Key Parameters
-    key_type      = "ed25519"
+    key_type      = "ec"
     key_usage     = [ "DigitalSignature", "KeyAgreement" ]
     ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
 }
@@ -52,7 +52,7 @@ resource "vault_pki_secret_backend_role" "internal" {
     enforce_hostnames           = true
 
     # Key Parameters
-    key_type      = "ed25519"
+    key_type      = "ec"
     key_usage     = [ "DigitalSignature", "KeyAgreement" ]
     ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
 }
