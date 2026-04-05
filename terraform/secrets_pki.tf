@@ -30,6 +30,7 @@ resource "vault_pki_secret_backend_role" "gateway" {
 
     # Key Parameters
     key_type      = "ec"
+    key_bits      = "256" 
     key_usage     = [ "DigitalSignature", "KeyAgreement" ]
     ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
 }
@@ -53,6 +54,7 @@ resource "vault_pki_secret_backend_role" "internal" {
 
     # Key Parameters
     key_type      = "ec"
+    key_bits      = "256"
     key_usage     = [ "DigitalSignature", "KeyAgreement" ]
     ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
 }
