@@ -22,5 +22,4 @@ resource "vault_kubernetes_auth_backend_role" "cert_manager" {
     bound_service_account_namespaces = [ "cert-manager"]
     token_policies                   = [ "cert-manager" ]
     token_ttl                        = 3600
-    audience                         = "vault"
 }
