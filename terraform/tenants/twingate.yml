@@ -1,0 +1,20 @@
+# tenants/twingate.yaml
+name: twingate
+
+auth_backends:
+  github:
+    enabled: true
+    bound_claims:
+      repository: "black-quartz/twingate-deployment"
+
+secrets_engines:
+  kubernetes:
+    enabled: true
+    name: twingate
+    kubernetes_role_name: "contributor"
+    kubernetes_role_type: "ClusterRole"
+    allowed_kubernetes_namespaces: ["twingate"]
+
+  kv:
+    enabled: true
+    path: twingate
