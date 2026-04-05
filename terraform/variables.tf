@@ -1,3 +1,5 @@
 variable "kubernetes_host" {
-    default = "https://kubernetes.default.svc"
+    description = "Endpoint to use for Kubernetes auth verification."
+    type        = string
+    default     = "https://kubernetes.default.svc"
 }
