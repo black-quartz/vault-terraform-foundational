@@ -46,7 +46,7 @@ resource "vault_pki_secret_backend_role" "internal" {
 
     # Domain Handling
     allowed_domains = [ "svc.cluster.local" ]
-    allow_wildcard_certificates = false 
+    allow_wildcard_certificates = true
     allow_subdomains            = true
     allow_ip_sans               = true
     allow_localhost             = true  
