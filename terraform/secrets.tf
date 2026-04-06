@@ -3,7 +3,8 @@
 ##################################
 
 resource "vault_kubernetes_secret_backend" "kubernetes" {
-    path                 = "kubernetes"
+    path                 = var.kubernetes_secrets_engine_path
+    description          = "Generate ephemeral Kubernetes credentials with scoped access."
     kubernetes_host      = "https://kubernetes.default.svc"
     disable_local_ca_jwt = false
 }
@@ -13,9 +14,9 @@ resource "vault_kubernetes_secret_backend" "kubernetes" {
 ##########################
 
 resource "vault_mount" "kv_v2" {
-    path        = "kv"
+    path        = var.kv_secrets_engine_path
     type        = "kv-v2"
-    description = "KV v2 Secrets Engine mount"
+    description = "Securely store and access generic secrets in Vault."
 
     options = {
         version = "2"
@@ -33,10 +34,9 @@ resource "vault_kv_secret_backend_v2" "example" {
 ###########################
 
 resource "vault_mount" "pki" {
-    path                      = "pki"
+    path                      = var.pki_secrets_engine_path
     type                      = "pki"
-    description               = "Black Quartz Issuing CA"
-
+    description               = "Issue PKI certificates to encrypt internal network traffic."
     default_lease_ttl_seconds = 86400 # 24h
     max_lease_ttl_seconds     = 86400 # 24h
 }

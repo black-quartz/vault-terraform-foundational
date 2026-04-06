@@ -3,8 +3,9 @@
 ###############################
 
 resource "vault_jwt_auth_backend" "github" {
-    path               = "jwt"
+    path               = var.github_auth_backend_path
     type               = "jwt"
+    description        = "Use GitHub OIDC to authenticate to Vault." 
     oidc_discovery_url = "https://token.actions.githubusercontent.com"
     bound_issuer       = "https://token.actions.githubusercontent.com"
 }
@@ -14,9 +15,9 @@ resource "vault_jwt_auth_backend" "github" {
 ###############################
 
 resource "vault_auth_backend" "kubernetes" {
+    path        = var.kubernetes_auth_backend_path
     type        = "kubernetes"
-    path        = "kubernetes"
-    description = "Kubernetes auth backend for pod identity authentication."
+    description = "Use Kubernetes service account credentials to authenticate to Vault."
 }
 
 resource "vault_kubernetes_auth_backend_config" "kubernetes" {
