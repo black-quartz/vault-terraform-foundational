@@ -24,7 +24,7 @@ resource "vault_mount" "kv_v2" {
     }       
 }
 
-resource "vault_kv_secret_backend_v2" "example" {
+resource "vault_kv_secret_backend_v2" "kv_v2" {
   mount        = vault_mount.kv_v2.path
   max_versions = 3
 }

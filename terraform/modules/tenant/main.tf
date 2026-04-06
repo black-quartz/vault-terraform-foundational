@@ -15,7 +15,7 @@ resource "vault_policy" "github_auth" {
 resource "vault_jwt_auth_backend_role" "this" {
     count = local.github_auth_enabled ? 1 : 0
 
-    backend        = var.vault_paths.auth.github
+    backend        = var.github_auth_backend_path
     role_name      = var.name
     token_policies = [ vault_policy.github_auth[0].name ]
     token_ttl      = var.auth_backends.github.token_ttl
@@ -32,7 +32,7 @@ resource "vault_jwt_auth_backend_role" "this" {
 resource "vault_kubernetes_auth_backend_role" "this" {
     count = local.kubernetes_auth_enabled ? 1 : 0
 
-    backend        = var.vault_paths.auth.kubernetes
+    backend        = var.kubernetes_auth_backend_path
     role_name      = var.name
     token_policies = [ vault_policy.kubernetes_auth[0].name ]
     token_ttl      = var.auth_backends.kubernetes.token_ttl
@@ -45,7 +45,7 @@ resource "vault_kubernetes_auth_backend_role" "this" {
 resource "vault_kubernetes_secret_backend_role" "this" {
     count = local.kubernetes_secrets_enabled ? 1 : 0
 
-    backend           = var.vault_paths.secrets.kubernetes
+    backend           = var.kubernetes_secrets_engine_path
     name              = var.secrets_engines.kubernetes.name
     token_default_ttl = var.secrets_engines.kubernetes.token_default_ttl
     token_max_ttl     = var.secrets_engines.kubernetes.token_max_ttl 

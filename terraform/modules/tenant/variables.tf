@@ -43,16 +43,26 @@ variable "secrets_engines" {
     })
 }
 
-variable "vault_paths" {
-    description = "Vault secrets engine mount paths for backend roles."
-    type = object({
-        auth = object({
-            github     = string
-            kubernetes = string
-        })
-        secrets = object({
-            kubernetes = string
-            kv         = string
-        })
-    })
+variable "github_auth_backend_path" {
+    description = "Path for the GitHub JWT auth backend."
+    type        = string
+    default     = "jwt"
+}
+
+variable "kubernetes_auth_backend_path" {
+    description = "Path for the Kubernetes auth backend."
+    type        = string
+    default     = "kubernetes"
+}
+
+variable "kubernetes_secrets_engine_path" {
+    description = "Path for the Kubernetes secrets engine."
+    type        = string
+    default     = "kubernetes"
+}
+
+variable "kv_secrets_engine_path" {
+    description = "Path for the KV v2 secrets engine."
+    type        = string
+    default     = "kv"
 }

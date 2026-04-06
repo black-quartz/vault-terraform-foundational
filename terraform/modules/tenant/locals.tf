@@ -26,11 +26,11 @@ locals {
     # Define policy for GitHub authenticated identities
     github_auth_policy_parts = compact([
         local.kv_secrets_enabled ? templatefile("${path.module}/policies/kv-read.hcl.tpl", {
-            secrets_engine_path = var.vault_paths.secrets.kv
+            secrets_engine_path = var.kv_secrets_engine_path
             tenant_path         = var.secrets_engines.kv.path
         }) : null,
         local.kubernetes_secrets_enabled ? templatefile("${path.module}/policies/kubernetes-creds.hcl.tpl", {
-            secrets_engine_path = var.vault_paths.secrets.kubernetes
+            secrets_engine_path = var.kubernetes_secrets_engine_path
             tenant_path         = var.secrets_engines.kubernetes.name
         }) : null
     ])
@@ -40,7 +40,7 @@ locals {
     # Define policy for Kubernetes authenticated identities
     kubernetes_auth_policy_parts = compact([
         local.kv_secrets_enabled ? templatefile("${path.module}/policies/kv-read.hcl.tpl", {
-            secrets_engine_path = var.vault_paths.secrets.kv
+            secrets_engine_path = var.kv_secrets_engine_path
             tenant_path         = var.secrets_engines.kv.path
         }) : null
     ])
