@@ -18,13 +18,13 @@ resource "vault_jwt_auth_backend_role" "this" {
     backend        = var.github_auth_backend_path
     role_name      = var.name
     token_policies = [ vault_policy.github_auth[0].name ]
-    token_ttl      = var.auth_backends.github.token_ttl
-    token_max_ttl  = var.auth_backends.github.token_max_ttl
+    token_ttl      = var.github_auth_backend.token_ttl
+    token_max_ttl  = var.github_auth_backend.token_max_ttl
 
     role_type       = "jwt"
     user_claim      = "actor"
     bound_audiences = ["https://github.com/black-quartz"]
-    bound_claims    = var.auth_backends.github.bound_claims
+    bound_claims    = var.github_auth_backend.bound_claims
 
 
 }
@@ -35,22 +35,22 @@ resource "vault_kubernetes_auth_backend_role" "this" {
     backend        = var.kubernetes_auth_backend_path
     role_name      = var.name
     token_policies = [ vault_policy.kubernetes_auth[0].name ]
-    token_ttl      = var.auth_backends.kubernetes.token_ttl
-    token_max_ttl  = var.auth_backends.kubernetes.token_max_ttl 
+    token_ttl      = var.kubernetes_auth_backend.token_ttl
+    token_max_ttl  = var.kubernetes_auth_backend.token_max_ttl
 
-    bound_service_account_names      = var.auth_backends.kubernetes.bound_service_account_names
-    bound_service_account_namespaces = var.auth_backends.kubernetes.bound_service_account_namespaces
+    bound_service_account_names      = var.kubernetes_auth_backend.bound_service_account_names
+    bound_service_account_namespaces = var.kubernetes_auth_backend.bound_service_account_namespaces
 }
 
 resource "vault_kubernetes_secret_backend_role" "this" {
     count = local.kubernetes_secrets_enabled ? 1 : 0
 
     backend           = var.kubernetes_secrets_engine_path
-    name              = var.secrets_engines.kubernetes.name
-    token_default_ttl = var.secrets_engines.kubernetes.token_default_ttl
-    token_max_ttl     = var.secrets_engines.kubernetes.token_max_ttl 
+    name              = var.kubernetes_secrets_engine.name
+    token_default_ttl = var.kubernetes_secrets_engine.token_default_ttl
+    token_max_ttl     = var.kubernetes_secrets_engine.token_max_ttl 
 
-    kubernetes_role_name          = var.secrets_engines.kubernetes.kubernetes_role_name
-    kubernetes_role_type          = var.secrets_engines.kubernetes.kubernetes_role_type
-    allowed_kubernetes_namespaces = var.secrets_engines.kubernetes.allowed_kubernetes_namespaces
+    kubernetes_role_name          = var.kubernetes_secrets_engine.kubernetes_role_name
+    kubernetes_role_type          = var.kubernetes_secrets_engine.kubernetes_role_type
+    allowed_kubernetes_namespaces = var.kubernetes_secrets_engine.allowed_kubernetes_namespaces
 }

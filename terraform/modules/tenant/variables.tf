@@ -4,43 +4,50 @@ variable "name" {
     nullable    = false
 }
 
-variable "auth_backends" {
-    description = "Vault auth configuration options for the tenant."
+variable "github_auth_backend" {
+    description = "Parameters for the GitHub JWT auth backend."
     type = object({
-        github = optional(object({
-            enabled       = optional(bool, false)
-            bound_claims  = map(string)
-            token_ttl     = optional(number, 900)  # 15m
-            token_max_ttl = optional(number, 1800) # 30m
-        }), null)
-        kubernetes = optional(object({
-            enabled                          = optional(bool, false)
-            bound_service_account_names      = set(string)
-            bound_service_account_namespaces = set(string)
-            token_ttl                        = optional(number, 28800) # 8hr
-            token_max_ttl                    = optional(number, 86400) # 24hr
-        }), null)
+        enabled      = optional(bool, true)
+        bound_claims = map(string)
+        token_ttl     = optional(number, 900)  # 15m
+        token_max_ttl = optional(number, 1800) # 30m
     })
-    nullable = false
+    default = null
 }
 
-variable "secrets_engines" {
-    description = "Vault secrets engine configuration options for the tenant."
+variable "kubernetes_auth_backend" {
+    description = "Parameters for the Kubernetes auth backend."
     type = object({
-        kubernetes = optional(object({
-            enabled                       = optional(bool, false)
-            name                          = string
-            kubernetes_role_name          = string
-            kubernetes_role_type          = string
-            allowed_kubernetes_namespaces = list(string)
-            token_default_ttl             = optional(number, 900)  # 15m
-            token_max_ttl                 = optional(number, 1800) # 30m
-        }), null)
-        kv = optional(object({
-            enabled = optional(bool, false)
-            path    = string
-        }), null)
+        enabled                          = optional(bool, true)
+        bound_service_account_names      = set(string)
+        bound_service_account_namespaces = set(string)
+        token_ttl                        = optional(number, 28800) # 8hr
+        token_max_ttl                    = optional(number, 86400) # 24hr                      
     })
+    default = null
+}
+
+variable "kubernetes_secrets_engine" {
+    description = "Parameters for the Kubernetes secrets engine."
+    type = object({
+        enabled                       = optional(bool, true)
+        name                          = string
+        kubernetes_role_name          = string
+        kubernetes_role_type          = string
+        allowed_kubernetes_namespaces = list(string)
+        token_default_ttl             = optional(number, 900)  # 15m
+        token_max_ttl                 = optional(number, 1800) # 30m
+    })
+    default = null
+}
+
+variable "kv_secrets_engine" {
+    description = "Parameters for the KV secrets engine."
+    type = object({
+        enabled = optional(bool, true)
+        path    = string
+    })
+    default = null
 }
 
 variable "github_auth_backend_path" {
