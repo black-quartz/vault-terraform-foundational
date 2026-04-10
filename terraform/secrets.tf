@@ -66,17 +66,17 @@ resource "vault_pki_secret_backend_role" "gateway" {
     ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
 }
 
-resource "vault_pki_secret_backend_role" "internal" {
+resource "vault_pki_secret_backend_role" "kubernetes" {
     # Role Parameters
     backend    = vault_mount.pki.path
-    name       = "internal"
+    name       = "kubernetes"
     issuer_ref = "default"
     ttl        = 86400 # 24h
     max_ttl    = 86400 # 24h
     no_store   = true
 
     # Domain Handling
-    allowed_domains             = [ "svc.cluster.local" ]
+    allowed_domains             = [ "prod-us.blackquartz.io" ]
     allow_any_name              = false
     allow_wildcard_certificates = true
     allow_subdomains            = true
