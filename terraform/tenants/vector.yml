@@ -1,0 +1,12 @@
+name: vector
+
+auth_backends:
+  kubernetes:
+    bound_service_account_names:
+      - vector-secrets-reader
+    bound_service_account_namespaces:
+      - vector
+
+secrets_engines:
+  kv:
+    path: vector

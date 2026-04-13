@@ -19,7 +19,7 @@ variable "kubernetes_secrets_engine_path" {
 variable "kv_secrets_engine_path" {
     description = "Path for the KV v2 secrets engine."
     type        = string
-    default     = "kv"
+    default     = "secrets"
 }
 
 variable "pki_secrets_engine_path" {
