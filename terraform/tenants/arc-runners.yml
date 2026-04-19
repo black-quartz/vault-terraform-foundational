@@ -1,0 +1,12 @@
+name: arc-runners
+
+auth_backends:
+  kubernetes:
+    bound_service_account_names:
+      - arc-runners-secret-store
+    bound_service_account_namespaces:
+      - arc-runners
+
+secrets_engines:
+  kv:
+    path: arc-runners
