@@ -53,7 +53,7 @@ resource "vault_pki_secret_backend_role" "gateway" {
     # Domain Handling
     allowed_domains             = ["ilysium.io"]
     allow_any_name              = false 
-    allow_wildcard_certificates = false
+    allow_wildcard_certificates = true
     allow_subdomains            = true
     allow_ip_sans               = false
     allow_localhost             = false
