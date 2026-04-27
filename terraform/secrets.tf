@@ -51,7 +51,7 @@ resource "vault_pki_secret_backend_role" "gateway" {
     no_store   = true
 
     # Domain Handling
-    allowed_domains             = ["blackquartz.io"]
+    allowed_domains             = ["ilysium.io"]
     allow_any_name              = false 
     allow_wildcard_certificates = false
     allow_subdomains            = true
@@ -62,12 +62,12 @@ resource "vault_pki_secret_backend_role" "gateway" {
     # Key Parameters
     key_type      = "ec"
     key_bits      = "256" 
-    key_usage     = [ "DigitalSignature", "KeyAgreement" ]
-    ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
+    key_usage     = ["DigitalSignature", "KeyAgreement"]
+    ext_key_usage = ["ServerAuth", "ClientAuth"] 
 }
 
 resource "vault_pki_secret_backend_role" "kubernetes" {
-    # Role Parameters
+    # Role Parameter
     backend    = vault_mount.pki.path
     name       = "kubernetes"
     issuer_ref = "default"
@@ -76,7 +76,7 @@ resource "vault_pki_secret_backend_role" "kubernetes" {
     no_store   = true
 
     # Domain Handling
-    allowed_domains             = [ "prod-us.blackquartz.io" ]
+    allowed_domains             = ["prod-us.ilysium.io"]
     allow_any_name              = false
     allow_wildcard_certificates = true
     allow_subdomains            = true
@@ -87,6 +87,6 @@ resource "vault_pki_secret_backend_role" "kubernetes" {
     # Key Parameters
     key_type      = "ec"
     key_bits      = "256"
-    key_usage     = [ "DigitalSignature", "KeyAgreement" ]
-    ext_key_usage = [ "ServerAuth", "ClientAuth" ] 
+    key_usage     = ["DigitalSignature", "KeyAgreement"]
+    ext_key_usage = ["ServerAuth", "ClientAuth"] 
 }
