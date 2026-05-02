@@ -76,7 +76,7 @@ resource "vault_pki_secret_backend_role" "kubernetes" {
     no_store   = true
 
     # Domain Handling
-    allowed_domains             = ["prod-us.ilysium.io"]
+    allowed_domains             = ["svc", "svc.prod-us-1.ilysium.io"]
     allow_any_name              = false
     allow_wildcard_certificates = true
     allow_subdomains            = true
