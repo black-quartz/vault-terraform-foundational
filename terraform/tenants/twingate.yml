@@ -1,0 +1,15 @@
+name: twingate
+secrets_engines:
+  kv:
+    path: twingate
+auth_backends:
+  kubernetes:
+    twingate:
+      role_name: twingate
+      bound_service_account_names: ["twingate-secret-store"]
+      bound_service_account_namespaces: ["twingate"]
+      token_policy_keys: ["kv-read"]
+policies:
+  kv-read:
+    name: twingate-kv-read
+    template: kv-read

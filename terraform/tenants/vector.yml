@@ -6,7 +6,7 @@ auth_backends:
   kubernetes:
     vector:
       role_name: vector
-      bound_service_account_names: ["vector-secrets-reader"]
+      bound_service_account_names: ["vector-secret-store"]
       bound_service_account_namespaces: ["vector"]
       token_policy_keys: ["kv-read"]
 policies:

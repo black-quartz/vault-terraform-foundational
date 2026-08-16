@@ -1,0 +1,15 @@
+name: minecraft
+secrets_engines:
+  kv:
+    path: minecraft
+auth_backends:
+  kubernetes:
+    twingate:
+      role_name: minecraft
+      bound_service_account_names: ["minecraft-secret-store"]
+      bound_service_account_namespaces: ["minecraft"]
+      token_policy_keys: ["kv-read"]
+policies:
+  kv-read:
+    name: minecraft-kv-read
+    template: kv-read
